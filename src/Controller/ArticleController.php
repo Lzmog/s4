@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use http\Env\Response;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,9 +44,14 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/new/{slug}/heart", name="article_toggle_heart", methods={"POST"})
+     * @param $slug
+     * @param LoggerInterface $logger
+     * @return JsonResponse
      */
-    public function toggleArticleHeart($slug)
+    public function toggleArticleHeart($slug, LoggerInterface $logger)
     {
+        $logger->info('Article is being hearted');
+
         return new JsonResponse(['hearts' => rand(5,100)]);
     }
 }
