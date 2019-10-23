@@ -1,4 +1,19 @@
 {
+    "doctrine/annotations": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "cb4152ebcadbe620ea2261da1a1c5a9b8cea7672"
+        },
+        "files": [
+            "config/routes/annotations.yaml"
+        ]
+    },
+    "doctrine/lexer": {
+        "version": "1.0.2"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -8,11 +23,23 @@
     "psr/log": {
         "version": "1.0.2"
     },
-    "psr/simple-cache": {
-        "version": "1.0.0"
+    "sensio/framework-extra-bundle": {
+        "version": "5.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.2",
+            "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
+        },
+        "files": [
+            "config/packages/sensio_framework_extra.yaml"
+        ]
     },
     "symfony/cache": {
         "version": "v4.0.2"
+    },
+    "symfony/cache-contracts": {
+        "version": "v1.1.7"
     },
     "symfony/config": {
         "version": "v4.0.2"
@@ -37,6 +64,9 @@
     },
     "symfony/event-dispatcher": {
         "version": "v4.0.2"
+    },
+    "symfony/event-dispatcher-contracts": {
+        "version": "v1.1.7"
     },
     "symfony/filesystem": {
         "version": "v4.0.2"
@@ -71,11 +101,23 @@
     "symfony/lts": {
         "version": "4-dev"
     },
+    "symfony/mime": {
+        "version": "v4.3.5"
+    },
     "symfony/polyfill-ctype": {
         "version": "v1.9.0"
     },
+    "symfony/polyfill-intl-idn": {
+        "version": "v1.12.0"
+    },
     "symfony/polyfill-mbstring": {
         "version": "v1.6.0"
+    },
+    "symfony/polyfill-php72": {
+        "version": "v1.12.0"
+    },
+    "symfony/polyfill-php73": {
+        "version": "v1.12.0"
     },
     "symfony/process": {
         "version": "v4.3.5"
@@ -88,6 +130,12 @@
             "version": "4.0",
             "ref": "cda8b550123383d25827705d05a42acf6819fe4e"
         }
+    },
+    "symfony/service-contracts": {
+        "version": "v1.1.7"
+    },
+    "symfony/var-exporter": {
+        "version": "v4.3.5"
     },
     "symfony/web-server-bundle": {
         "version": "3.3",
