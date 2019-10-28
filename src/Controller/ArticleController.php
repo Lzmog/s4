@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\MarkdownHelper;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use Michelf\MarkdownInterface;
 
 class ArticleController extends AbstractController
 {
@@ -26,7 +25,7 @@ class ArticleController extends AbstractController
     /**
      * @Route("/new/{slug}", name="app_show")
      */
-    public function show($slug, MarkdownInterface $markdown, AdapterInterface $cache)
+    public function show($slug, MarkdownHelper $markdownHelper)
     {
         $comments = [
             'I ate a normal rock once. It did NOT taste like bacon!',
@@ -50,14 +49,7 @@ strip steak pork belly aliquip capicola officia. Labore deserunt esse chicken lo
 cow est ribeye adipisicing. Pig hamburger pork belly enim. Do porchetta minim capicola irure pancetta chuck
 fugiat.
 EOF;
-
-        $item = $cache->getItem('markdown' . md5($articleContent));
-        if (false === $item->isHit()) {
-            $item->set($markdown->transform($articleContent));
-            $cache->save($item);
-        }
-
-        $articleContent = $item->get();
+        $articleContent = $markdownHelper->parse($articleContent);
 
         return $this->render(
             'article/show.html.twig',
