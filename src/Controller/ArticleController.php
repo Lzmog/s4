@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Michelf\MarkdownInterface;
@@ -25,7 +26,7 @@ class ArticleController extends AbstractController
     /**
      * @Route("/new/{slug}", name="app_show")
      */
-    public function show($slug, MarkdownInterface $markdown)
+    public function show($slug, MarkdownInterface $markdown, AdapterInterface $cache)
     {
         $comments = [
             'I ate a normal rock once. It did NOT taste like bacon!',
@@ -37,7 +38,7 @@ class ArticleController extends AbstractController
 Spicy **jalapeno bacon** ipsum dolor amet veniam shank in dolore. Ham hock nisi landjaeger cow,
 lorem proident [beef ribs](https://baconipsum.com/) aute enim veniam ut cillum pork chuck picanha. Dolore reprehenderit
 labore minim pork belly spare ribs cupim short loin in. Elit exercitation eiusmod dolore cow
-turkey shank eu pork belly meatball non cupim.
+**turkey** shank eu pork belly meatball non cupim.
 Laboris beef ribs fatback fugiat eiusmod jowl kielbasa alcatra dolore velit ea ball tip. Pariatur
 laboris sunt venison, et laborum dolore minim non meatball. Shankle eu flank aliqua shoulder,
 capicola biltong frankfurter boudin cupim officia. Exercitation fugiat consectetur ham. Adipisicing
@@ -49,6 +50,13 @@ strip steak pork belly aliquip capicola officia. Labore deserunt esse chicken lo
 cow est ribeye adipisicing. Pig hamburger pork belly enim. Do porchetta minim capicola irure pancetta chuck
 fugiat.
 EOF;
+        $item = $cache->getItem('markdown' . md5($articleContent));
+        if (false === $item->isHit()) {
+            $item->set($markdown->transform($articleContent));
+            $cache->save($item);
+        }
+
+        $articleContent = $item->get();
 
         $articleContent = $markdown->transform($articleContent);
 
