@@ -1,2 +1,2 @@
 nexy_slack:
-    endpoint: ~ #Required
+    endpoint: '%nexy_slack.endpoint%' #Required
