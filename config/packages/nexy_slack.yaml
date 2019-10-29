@@ -1,2 +1,2 @@
 nexy_slack:
-    endpoint: '%nexy_slack.endpoint%' #Required
+    endpoint: '%env(SLACK_WEBHOOK_ENDPOINT)%' #Required
