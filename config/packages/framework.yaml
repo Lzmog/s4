@@ -1,3 +1,5 @@
+
+
 framework:
     secret: '%env(APP_SECRET)%'
     #default_locale: en
@@ -13,3 +15,6 @@ framework:
     #fragments: ~
     php_errors:
         log: true
+
+    cache:
+        app: '%cache_adapter%'
