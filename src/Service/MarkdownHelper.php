@@ -5,20 +5,31 @@ declare(strict_types=1);
 namespace App\Service;
 
 use Michelf\MarkdownInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 
 class MarkdownHelper
 {
-    /** @var MarkdownInterface */
+    /**
+     * @var MarkdownInterface
+     */
     private $markdown;
 
-    /** @var AdapterInterface */
+    /**
+     * @var AdapterInterface
+     */
     private $cache;
 
-    public function __construct(MarkdownInterface $markdown, AdapterInterface $cache)
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(MarkdownInterface $markdown, AdapterInterface $cache, LoggerInterface $logger)
     {
         $this->markdown = $markdown;
         $this->cache = $cache;
+        $this->logger = $logger;
     }
 
     /**
@@ -28,6 +39,10 @@ class MarkdownHelper
      */
     public function parse(string $source): string
     {
+        if (stripos($source, 'bacon')) {
+            $this->logger->info('they are talking about bacon');
+        }
+
         $item = $this->cache->getItem('markdown' . md5($source));
         if (false === $item->isHit()) {
             $item->set($this->markdown->transform($source));
