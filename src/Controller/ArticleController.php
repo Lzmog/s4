@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Service\MarkdownHelper;
-use Nexy\Slack\Client;
+use App\Service\SlackClient;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -35,16 +35,18 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * @param $slug
+     * @param MarkdownHelper $markdownHelper
+     * @param SlackClient $slack
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Http\Client\Exception
+     * @throws \Psr\Cache\InvalidArgumentException
      * @Route("/new/{slug}", name="app_show")
      */
-    public function show($slug, MarkdownHelper $markdownHelper, Client $slack)
+    public function show($slug, MarkdownHelper $markdownHelper, SlackClient $slack)
     {
         if ($slug === 'khaaaaaan') {
-            $message = $slack->createMessage()
-                ->from('Khan')
-                ->withIcon(':ghost:')
-                ->setText('Ah, Kirk, my old friend...');
-            $slack->sendMessage($message);
+            $slack->sendMessage('Khan', 'Ah, Kirk, my old friend...');
         }
 
         $comments = [
