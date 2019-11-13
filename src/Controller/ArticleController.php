@@ -28,11 +28,20 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/", name="app_homepage")
+     * @param EntityManagerInterface $entityManager
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function homepage()
+    public function homepage(EntityManagerInterface $entityManager)
     {
+        $repository = $entityManager->getRepository(Article::class);
+//        $articles = $repository->findBy([], ['pulishedAt' => 'DESC']);
+        $articles = $repository->findBy([], ['pulishedAt' => 'DESC']);
+
         return $this->render(
-            'article/homepage.html.twig'
+            'article/homepage.html.twig',
+            [
+                'articles' => $articles,
+            ]
         );
     }
 
