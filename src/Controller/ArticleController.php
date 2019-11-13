@@ -47,26 +47,15 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/new/{slug}", name="app_show")
-     * @param $slug
+     * @param Article $article
      * @param SlackClient $slack
-     * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Http\Client\Exception
-     * @throws \Psr\Cache\InvalidArgumentException
      */
-    public function show($slug, SlackClient $slack, EntityManagerInterface $entityManager)
+    public function show(Article $article, SlackClient $slack)
     {
-        if ($slug === 'khaaaaaan') {
+        if ($article->getSlug() === 'khaaaaaan') {
             $slack->sendMessage('Khan', 'Ah, Kirk, my old friend...');
-        }
-
-        $repository = $entityManager->getRepository(Article::class);
-
-        /** @var Article $article */
-        $article = $repository->findOneBy(['slug' => $slug]);
-
-        if (false === $article) {
-            throw $this->createNotFoundException(sprintf('No article for slug %s', $slug));
         }
 
         $comments = [
