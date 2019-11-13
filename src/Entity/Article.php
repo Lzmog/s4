@@ -36,6 +36,24 @@ class Article
      */
     private $pulishedAt;
 
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255)
+     */
+    private $author;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    private $heartCount = 0;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imageFileName;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,5 +105,70 @@ class Article
         $this->pulishedAt = $pulishedAt;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthor(): string
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param string $author
+     * @return Article
+     */
+    public function setAuthor(string $author): Article
+    {
+        $this->author = $author;
+        
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHeartCount(): int
+    {
+        return $this->heartCount;
+    }
+
+    /**
+     * @param int $heartCount
+     * @return Article
+     */
+    public function setHeartCount(int $heartCount): Article
+    {
+        $this->heartCount = $heartCount;
+        
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageFileName(): string
+    {
+        return $this->imageFileName;
+    }
+
+    /**
+     * @param string $imageFileName
+     * @return Article
+     */
+    public function setImageFileName(string $imageFileName): Article
+    {
+        $this->imageFileName = $imageFileName;
+        
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImagePath(): string
+    {
+        return 'images/' . $this->getImageFileName();
     }
 }
