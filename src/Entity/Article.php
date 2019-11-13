@@ -135,17 +135,6 @@ class Article
     }
 
     /**
-     * @param int $heartCount
-     * @return Article
-     */
-    public function setHeartCount(int $heartCount): Article
-    {
-        $this->heartCount = $heartCount;
-        
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getImageFileName(): string
@@ -170,5 +159,15 @@ class Article
     public function getImagePath(): string
     {
         return 'images/' . $this->getImageFileName();
+    }
+
+    /**
+     * @return $this
+     */
+    public function incrementHeartCount(): self
+    {
+        $this->heartCount = $this->heartCount + 1;
+
+        return $this;
     }
 }
