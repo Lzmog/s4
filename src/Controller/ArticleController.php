@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Repository\ArticleRepository;
 use App\Service\MarkdownHelper;
 use App\Service\SlackClient;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,11 +32,10 @@ class ArticleController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function homepage(EntityManagerInterface $entityManager)
+    public function homepage(ArticleRepository $repository)
     {
-        $repository = $entityManager->getRepository(Article::class);
 //        $articles = $repository->findBy([], ['pulishedAt' => 'DESC']);
-        $articles = $repository->findBy([], ['pulishedAt' => 'DESC']);
+        $articles = $repository->findAllPublishedOrderedByNewest();
 
         return $this->render(
             'article/homepage.html.twig',
