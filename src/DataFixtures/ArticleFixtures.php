@@ -43,7 +43,6 @@ cow est ribeye adipisicing. Pig hamburger pork belly enim. Do porchetta minim ca
 fugiat.
 EOF
             );
-            $article->setSlug($this->faker->slug);
 
             if ($this->faker->boolean(70)) {
                 $article->setPulishedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
