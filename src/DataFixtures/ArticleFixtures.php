@@ -3,15 +3,29 @@
 namespace App\DataFixtures;
 
 use App\Entity\Article;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class ArticleFixtures extends BaseFixture
 {
+    private static $articleTitles = [
+        'Why Asteroids Taste Like Bacon',
+        'Life on Planet Mercury: Tan, Relaxing and Fabulous',
+        'Light Speed Travel: Fountain of Youth or Fallacy',
+    ];
+    private static $articleImages = [
+        'asteroid.jpeg',
+        'mercury.jpeg',
+        'lightspeed.png',
+    ];
+    private static $articleAuthors = [
+        'Mike Ferengi',
+        'Amy Oort',
+    ];
+
     public function loadData(ObjectManager $manager)
     {
         $this->createMany(Article::class, 10, function (Article $article, $count) {
-            $article->setTitle('Why Asteroids Taste Like Bacon ');
+            $article->setTitle($this->faker->randomElement(self::$articleTitles));
             $article->setContent(<<<EOF
 Spicy **jalapeno bacon** ipsum dolor amet veniam shank in dolore. Ham hock nisi landjaeger cow,
 lorem proident [beef ribs](https://baconipsum.com/) aute enim veniam ut cillum pork chuck picanha. Dolore reprehenderit
@@ -29,16 +43,16 @@ cow est ribeye adipisicing. Pig hamburger pork belly enim. Do porchetta minim ca
 fugiat.
 EOF
             );
-            $article->setSlug('why-asteroids-taste-like-bacon-' . $count);
+            $article->setSlug($this->faker->slug);
 
-            if (rand(1, 10) > 2) {
-                $article->setPulishedAt(new \DateTime(sprintf('-%d days', rand(1, 100))));
+            if ($this->faker->boolean(70)) {
+                $article->setPulishedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             }
 
             $article
-                ->setAuthor('Mike Ferengi')
-                ->setHeartCount(rand(5, 100))
-                ->setImageFileName('asteroid.jpeg');
+                ->setAuthor($this->faker->randomElement(self::$articleAuthors))
+                ->setHeartCount($this->faker->numberBetween(5, 100))
+                ->setImageFileName($this->faker->randomElement(self::$articleImages ));
         });
 
         $manager->flush();
