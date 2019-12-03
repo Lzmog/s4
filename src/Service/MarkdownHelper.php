@@ -53,7 +53,6 @@ class MarkdownHelper
             return $this->markdown->transform($source);
         }
 
-
         $item = $this->cache->getItem('markdown' . md5($source));
         if ($item->isHit()) {
             $item->set($this->markdown->transform($source));
